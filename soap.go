@@ -80,13 +80,13 @@ func SoapClientWithConfig(wsdl string, httpClient *http.Client, config *Config) 
 // Client struct hold all the information about WSDL,
 // request and response of the server
 type Client struct {
-	HTTPClient         *http.Client
-	AutoAction         bool
-	SOAPActionInActive bool
-	URL                string
-	HeaderName         string
-	HeaderParams       SoapParams
-	Definitions        *wsdlDefinitions
+	HTTPClient       *http.Client
+	AutoAction       bool
+	SOAPActionActive bool
+	URL              string
+	HeaderName       string
+	HeaderParams     SoapParams
+	Definitions      *wsdlDefinitions
 	// Must be set before first request otherwise has no effect, minimum is 15 minutes.
 	RefreshDefinitionsAfter time.Duration
 	Username                string
@@ -243,7 +243,7 @@ func (p *process) doRequest(url string) ([]byte, error) {
 
 	req.Header.Add("Content-Type", "text/xml;charset=UTF-8")
 	req.Header.Add("Accept", "text/xml")
-	if p.Client.SOAPActionInActive {
+	if p.Client.SOAPActionActive {
 		req.Header.Add("SOAPAction", p.SoapAction)
 	}
 
